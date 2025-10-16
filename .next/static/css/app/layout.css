@@ -1,0 +1,16 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[3]!./src/styles/globals.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
+:root { --maxw: 980px; --pad: 20px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+main { max-width: var(--maxw); margin: 0 auto; padding: var(--pad); }
+nav { display:flex; gap:12px; padding:12px var(--pad); border-bottom: 1px solid #eee; }
+footer { margin-top: 48px; padding: 16px 0; border-top: 1px solid #eee; font-size: 14px; color: #666; }
+
+ .card { border: 1px solid #eee; border-radius: 8px; padding: 12px; }
+
+ .lyrics { white-space: pre-wrap; font-family: Georgia, serif; }
+
+ .activeLine { background: #fffae0; transition: background .2s ease; }
+
