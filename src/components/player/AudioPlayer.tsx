@@ -1,18 +1,15 @@
 "use client";
 
-import {useEffect, useRef, useState, useCallback} from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { usePlayerStore } from "@/lib/store";
 
-const WaveSurfer = dynamic(() => import("wavesurfer.js"), { ssr: false });
-
 export default function AudioPlayer({ src, slug }: { src: string; slug: string }) {
-  const containerRef = useRef<HTMLDivElement|null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const wavesurferRef = useRef<any>(null);
   const [ready, setReady] = useState(false);
-  const isPlaying = usePlayerStore(s => s.isPlaying);
-  const setPlaying = usePlayerStore(s => s.setPlaying);
-  const setCurrent = usePlayerStore(s => s.setCurrent);
+  const isPlaying = usePlayerStore((s) => s.isPlaying);
+  const setPlaying = usePlayerStore((s) => s.setPlaying);
+  const setCurrent = usePlayerStore((s) => s.setCurrent);
 
   useEffect(() => {
     if (!containerRef.current || wavesurferRef.current) return;
@@ -24,13 +21,15 @@ export default function AudioPlayer({ src, slug }: { src: string; slug: string }
         waveColor: "#bbb",
         progressColor: "#333",
         height: 64,
-        responsive: true,
         cursorWidth: 1,
       });
       wavesurferRef.current = ws;
       ws.load(src);
       ws.on("ready", () => setReady(true));
-      ws.on("play", () => { setPlaying(true); setCurrent(slug); });
+      ws.on("play", () => {
+        setPlaying(true);
+        setCurrent(slug);
+      });
       ws.on("pause", () => setPlaying(false));
       ws.on("finish", () => setPlaying(false));
     })();
@@ -45,10 +44,12 @@ export default function AudioPlayer({ src, slug }: { src: string; slug: string }
     ws.setTime(Math.max(0, ws.getCurrentTime() + sec));
   }, []);
 
-  // keyboard control
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.code === "Space") { e.preventDefault(); toggle(); }
+      if (e.code === "Space") {
+        e.preventDefault();
+        toggle();
+      }
       if (e.code === "ArrowLeft") skip(-5);
       if (e.code === "ArrowRight") skip(5);
     };
@@ -59,12 +60,16 @@ export default function AudioPlayer({ src, slug }: { src: string; slug: string }
   return (
     <div aria-label="Audio player">
       <div ref={containerRef} aria-busy={!ready} />
-      <div style={{display:"flex", gap:8, marginTop:8}}>
+      <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
         <button onClick={toggle} aria-label={isPlaying ? "Pause" : "Play"}>
           {isPlaying ? "Pause" : "Play"}
         </button>
-        <button onClick={() => skip(-5)} aria-label="Back 5 seconds">-5s</button>
-        <button onClick={() => skip(5)} aria-label="Forward 5 seconds">+5s</button>
+        <button onClick={() => skip(-5)} aria-label="Back 5 seconds">
+          -5s
+        </button>
+        <button onClick={() => skip(5)} aria-label="Forward 5 seconds">
+          +5s
+        </button>
       </div>
     </div>
   );
